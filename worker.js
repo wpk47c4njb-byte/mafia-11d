@@ -127,6 +127,10 @@ async function onUpdate(env, u, origin) {
   const isGroup = m.chat.type === "group" || m.chat.type === "supergroup";
   const cmd = m.text.trim().split(/\s+/)[0].split("@")[0].toLowerCase();
 
+  if (!isGroup) {
+    // eski ilova qo'ygan shaxsiy menyu tugmasini o'chirib, BotFather'dagi "🎭 O'ynash"ga qaytaramiz
+    await tg(env, "setChatMenuButton", { chat_id: chat, menu_button: { type: "default" } });
+  }
   if (cmd === "/start" && !isGroup) {
     return tg(env, "sendMessage", {
       chat_id: chat,
